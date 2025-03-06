@@ -1,0 +1,19 @@
+{
+  "categories": [
+    {
+      "name": "Soups",
+      "file": "lib/assets/data/soups.json"
+    },
+    {
+      "name": "Salads",
+      "file": "lib/assets/data/salads.json"
+    },
+    {
+      "name": "Desserts",
+      "file": "lib/assets/data/desserts.json"
+    },
+    {
+      "name": ""
+    }
+  ]
+}

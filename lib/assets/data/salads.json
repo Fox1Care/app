@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Салат",
+    "imageLink": "lib/assets/images/test.jpg",
+    "description": "Traditional salad",
+    "ingredients": ["Ingredient 1", "Ingredient 2"],
+    "instructions": ["Step 1", "Step 2"]
+  }
+]
