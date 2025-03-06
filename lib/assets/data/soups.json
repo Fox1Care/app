@@ -12,6 +12,13 @@
     "description": "Traditional soup",
     "ingredients": ["Ingredient 1", "Ingredient 2"],
     "instructions": ["Step 1", "Step 2"]
+  },
+  {
+    "name": "Борщ",
+    "imageLink": "lib/assets/images/borsch.jpg",
+    "description": "Traditional soup",
+    "ingredients": ["Ingredient 1", "Ingredient 2"],
+    "instructions": ["Step 1", "Step 2"]
   }
 ]
 
