@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:app/services/favourites_service.dart';
+import 'package:app/models/Recipe.dart';
+import 'package:app/widgets/dish_button.dart';
+import 'package:app/widgets/dish_recipe.dart';
 
-
-class FavouritesScreen extends StatefulWidget {
+class FavouritesScreen extends StatelessWidget {
   const FavouritesScreen({super.key});
-
-
-  @override
-  State<FavouritesScreen> createState() => _FavouritesScreen();
-
-}
-
-class _FavouritesScreen extends State<FavouritesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final favouritesService = context.watch<FavouritesService>();
+    final List<Recipe> favourites = favouritesService.favourites;
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -21,23 +21,16 @@ class _FavouritesScreen extends State<FavouritesScreen> {
             backgroundColor: Colors.green,
             centerTitle: true,
             floating: true,
-            title: const Row(
-            mainAxisSize: MainAxisSize.min,
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  Icons.star,
-                  color: Colors.white,
-                  size: 20,
-                    shadows: [
-                      Shadow(
-                        offset: Offset(2.0, 2.0),
-                        blurRadius: 3.0,
-                        color: Colors.black,
-                    ),
-                  ], // shadows
+                SvgPicture.asset(
+                  'lib/assets/icons/star.svg',
+                  height: 25,
+                  width: 20,
                 ),
-                SizedBox(width: 8),
-                Text(
+                const SizedBox(width: 8),
+                const Text(
                   'Избранное',
                   style: TextStyle(
                     shadows: [
@@ -46,29 +39,56 @@ class _FavouritesScreen extends State<FavouritesScreen> {
                         blurRadius: 3.0,
                         color: Colors.black,
                       ),
-                    ], // shadows
+                    ],
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(width: 8),
-                Icon(
-                  Icons.star,
-                  color: Colors.white,
-                  size: 20,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(2.0, 2.0),
-                      blurRadius: 3.0,
-                      color: Colors.black,
-                    ),
-                  ], // shadows
+                const SizedBox(width: 8),
+                SvgPicture.asset(
+                  'lib/assets/icons/star.svg',
+                  height: 25,
+                  width: 20,
                 ),
-              ], // children
+              ],
             ),
           ),
-        ], // slivers
+          favourites.isEmpty
+              ? const SliverToBoxAdapter(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "Для просмотра избранных блюд необходимо их добавить!",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight:
+                      FontWeight.bold
+                  ),
+                ),
+              ),
+            ),
+          )
+              : SliverList(
+            delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                final dish = favourites[index];
+                return DishButton(
+                  title: dish.name,
+                  imagePath: dish.imageLink,
+                  svgPath: 'lib/assets/icons/star.svg',
+                  onPressed: () {
+                    showDishRecipe(context, favourites[index]);
+                    },
+                  recipe: dish,
+                );
+              },
+              childCount: favourites.length,
+            ),
+          ),
+        ],
       ),
     );
   }

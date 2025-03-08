@@ -4,14 +4,18 @@ import 'package:app/widgets/dish_button.dart';
 import 'package:app/widgets/dish_recipe.dart';
 import 'package:app/models/Recipe.dart';
 
-class Dishes extends StatelessWidget {
+class Dishes extends StatefulWidget {
   const Dishes({super.key, required this.title, required this.svgPath, required this.dishes});
 
   final String title;
   final String svgPath;
   final List<Recipe> dishes;
 
+  @override
+  _Dishes createState() => _Dishes();
+}
 
+class _Dishes extends State<Dishes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,21 +28,13 @@ class Dishes extends StatelessWidget {
               title: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SvgPicture.asset(
-                      svgPath,
-                      height: 25,
-                      width: 20
-                  ),
+                  SvgPicture.asset(widget.svgPath, height: 25, width: 20),
                   SizedBox(width: 8),
                   Text(
-                      title,
+                    widget.title,
                     style: const TextStyle(
                       shadows: [
-                        Shadow(
-                          offset: Offset(2.0, 2.0),
-                          blurRadius: 3.0,
-                          color: Colors.black,
-                        ),
+                        Shadow(offset: Offset(2.0, 2.0), blurRadius: 3.0, color: Colors.black),
                       ],
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -46,11 +42,7 @@ class Dishes extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 8),
-                  SvgPicture.asset(
-                      svgPath,
-                      height: 25,
-                      width: 20
-                  ),
+                  SvgPicture.asset(widget.svgPath, height: 25, width: 20),
                 ],
               ),
             ),
@@ -58,10 +50,11 @@ class Dishes extends StatelessWidget {
         },
         body: SingleChildScrollView(
           child: Column(
-            children: dishes.map((dish) => DishButton(
+            children: widget.dishes.map((dish) => DishButton(
               title: dish.name,
               imagePath: dish.imageLink,
-              svgPath: svgPath,
+              svgPath: widget.svgPath,
+              recipe: dish,
               onPressed: () => showDishRecipe(context, dish),
             )).toList(),
           ),

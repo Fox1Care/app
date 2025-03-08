@@ -12,4 +12,13 @@ class Recipe {
     required this.ingredients,
     required this.instructions,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Recipe && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
 }

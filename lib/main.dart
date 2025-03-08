@@ -1,9 +1,16 @@
-import 'package:app/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:app/screens/splash_screen.dart';
+import 'package:app/services/favourites_service.dart';
+import 'package:app/screens/home_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => FavouritesService(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       routes: {
-        '/HomePage':(context) => HomePage(),
+        '/HomePage': (context) => HomePage(),
       },
     );
   }

@@ -2,10 +2,10 @@ String getCategoryFromSvg(String svgPath) {
   String fileName = svgPath.split('/').last;
 
   Map<String, String> categoryMap = {
-    'soup.svg': 'Soups',
-    'salad.svg' : 'Salads',
-    'dessert.svg': 'Desserts',
-    'meat.svg' : 'Meats',
+    'soup.svg': 'soups',
+    'salad.svg' : 'salads',
+    'dessert.svg': 'desserts',
+    'meat.svg' : 'meats',
   };
 
   if (categoryMap.containsKey(fileName)) {
