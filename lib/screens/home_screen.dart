@@ -7,9 +7,11 @@ class HomePage extends StatefulWidget {
 
   @override
   _HomePage createState() => _HomePage();
+
 }
 
 class _HomePage extends State<HomePage> with WidgetsBindingObserver {
+  final PageController _pageController = PageController();
   int selectedPage = 0;
   final List<Widget> pages = [
     HomeScreen(),
@@ -25,6 +27,7 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -37,6 +40,7 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver {
       }
       setState(() {
         selectedPage = 0;
+        _pageController.jumpToPage(selectedPage);
       });
     }
   }
@@ -44,9 +48,17 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: selectedPage,
-        children: pages,
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            selectedPage = index;
+          });
+        },
+        children: [
+          HomeScreen(),
+          FavouritesScreen(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.green,
@@ -57,6 +69,11 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver {
           setState(() {
             selectedPage = index;
           });
+          _pageController.animateToPage(
+              index,
+              duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          );
         },
         items: const [
           BottomNavigationBarItem(
@@ -134,6 +151,26 @@ class HomeScreen extends StatelessWidget {
               title: 'Десерты',
               imagePath: 'lib/assets/images/dessert.png',
               svgPath: 'lib/assets/icons/dessert.svg',
+            ),
+            CategoryButton(
+              title: 'Выпечка',
+              imagePath: 'lib/assets/images/bakery.png',
+              svgPath: 'lib/assets/icons/bakery.svg',
+            ),
+            CategoryButton(
+              title: 'Картофельные блюда',
+              imagePath: 'lib/assets/images/potato.png',
+              svgPath: 'lib/assets/icons/potato.svg',
+            ),
+            CategoryButton(
+              title: 'Мясные блюда',
+              imagePath: 'lib/assets/images/meat.png',
+              svgPath: 'lib/assets/icons/meat.svg',
+            ),
+            CategoryButton(
+              title: 'Напитки',
+              imagePath: 'lib/assets/images/drinks.png',
+              svgPath: 'lib/assets/icons/drinks.svg',
             ),
           ],
         ),

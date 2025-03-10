@@ -13,6 +13,26 @@ class Recipe {
     required this.instructions,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'imageLink': imageLink,
+      'description': description,
+      'ingredients': ingredients,
+      'instructions': instructions,
+    };
+  }
+
+  factory Recipe.fromJson(Map<String, dynamic> json) {
+    return Recipe(
+      name: json['name'],
+      imageLink: json['imageLink'],
+      description: json['description'],
+      ingredients: List<String>.from(json['ingredients']),
+      instructions: List<String>.from(json['instructions']),
+    );
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

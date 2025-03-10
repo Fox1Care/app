@@ -21,14 +21,16 @@ class DishButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double buttonHeight = screenWidth * 0.3;
+
     return Consumer<FavouritesService>(
       builder: (context, favouritesService, child) {
         bool isFav = favouritesService.isFavourite(recipe);
-        print("Building DishButton for ${recipe.name} - isFav: $isFav");
 
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size(400, 120),
+            minimumSize: Size(screenWidth * 0.9, buttonHeight),
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
           ),
@@ -38,14 +40,18 @@ class DishButton extends StatelessWidget {
               Ink.image(
                 image: AssetImage(imagePath),
                 fit: BoxFit.cover,
-                width: 400,
-                height: 120,
+                width: screenWidth,
+                height: buttonHeight,
                 child: Center(
                   child: Text(
                     title,
                     style: const TextStyle(
                       shadows: [
-                        Shadow(offset: Offset(2.0, 2.0), blurRadius: 3.0, color: Colors.black),
+                        Shadow(offset:
+                        Offset(2.0, 2.0),
+                            blurRadius: 3.0,
+                            color: Colors.black
+                        ),
                       ],
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

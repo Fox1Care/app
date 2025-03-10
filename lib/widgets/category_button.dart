@@ -16,9 +16,12 @@ class CategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double buttonHeight = screenWidth * 0.3;
+
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: const Size(400, 120),
+        minimumSize: Size(screenWidth * 0.9, buttonHeight),
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       ),
@@ -37,8 +40,8 @@ class CategoryButton extends StatelessWidget {
       child: Ink.image(
         image: AssetImage(imagePath),
         fit: BoxFit.cover,
-        width: 400,
-        height: 120,
+        width: screenWidth,
+        height: buttonHeight,
         child: Center(
           child: Text(
             title,

@@ -23,6 +23,9 @@ class _Dishes extends State<Dishes> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             SliverAppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white,
+              ),
               backgroundColor: Colors.green,
               centerTitle: true,
               title: Row(

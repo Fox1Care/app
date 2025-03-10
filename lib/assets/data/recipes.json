@@ -11,6 +11,22 @@
     {
       "name": "desserts",
       "file": "lib/assets/data/desserts.json"
+    },
+    {
+      "name": "meats",
+      "file": "lib/assets/data/meats.json"
+    },
+    {
+      "name": "potato",
+      "file": "lib/assets/data/potato.json"
+    },
+    {
+      "name": "bakery",
+      "file": "lib/assets/data/bakery.json"
+    },
+    {
+      "name": "drinks",
+      "file": "lib/assets/data/drinks.json"
     }
   ]
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import 'package:app/models/Recipe.dart';
 
 class FavouritesService extends ChangeNotifier {
@@ -6,7 +8,9 @@ class FavouritesService extends ChangeNotifier {
 
   factory FavouritesService() => _instance;
 
-  FavouritesService._internal();
+  FavouritesService._internal() {
+    _loadFavourites();
+  }
 
   final List<Recipe> _favourites = [];
 
@@ -22,6 +26,23 @@ class FavouritesService extends ChangeNotifier {
     } else {
       _favourites.add(recipe);
     }
+    _saveFavourites();
     notifyListeners();
+  }
+
+  Future<void> _saveFavourites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favsJson = _favourites.map((recipe) => jsonEncode(recipe.toJson())).toList();
+    await prefs.setStringList('favourites', favsJson);
+  }
+
+  Future<void> _loadFavourites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favsJson = prefs.getStringList('favourites');
+    if (favsJson != null) {
+      _favourites.clear();
+      _favourites.addAll(favsJson.map((json) => Recipe.fromJson(jsonDecode(json))));
+      notifyListeners();
+    }
   }
 }
